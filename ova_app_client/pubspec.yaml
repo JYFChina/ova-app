@@ -1,0 +1,38 @@
+name: ova_app_client
+description: A new Flutter project.
+
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^4.3.3
+  event_bus: ^1.1.1
+  # 本地json对象存储
+  localstorage: ^2.0.0
+  shared_preferences: ^0.5.6+3
+  #自带图标库
+  cupertino_icons: ^1.0.0
+  flutter_custom_clippers: ^1.1.1
+  # loading组件
+  flutter_easyloading: ^2.2.2
+  connectivity: ^2.0.2
+  #缓存cookie
+  dio_cookie_manager: ^1.0.0
+  cookie_jar: ^1.0.1
+  #http网络请求
+  dio: ^3.0.10
+  #延迟图片
+  cached_network_image: ^2.3.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+

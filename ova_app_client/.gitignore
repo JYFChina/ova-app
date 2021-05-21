@@ -1,0 +1,32 @@
+# Miscellaneous
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+.idea/
+.metadata
+pubspec.lock
+.dart_tool
+
+
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
