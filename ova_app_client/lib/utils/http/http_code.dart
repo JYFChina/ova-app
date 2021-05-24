@@ -47,7 +47,7 @@ class EventBusUtil {
   static loading(){
     EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.cubeGrid;
     EasyLoading.instance.maskType = EasyLoadingMaskType.black;
-    EasyLoading.show(status: 'loading...', dismissOnTap: false);
+    EasyLoading.show(status: '请稍后...', dismissOnTap: false);
   }
 
   /* *

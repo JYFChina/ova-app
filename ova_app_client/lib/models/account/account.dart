@@ -5,7 +5,7 @@
  */
 
 
-class Account {
+class Account{
   int userId;
   String username;
   String password;
@@ -29,16 +29,16 @@ class Account {
     this.delFlag});
 
   Account.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    username = json['username'];
-    password = json['password'];
-    createTime = json['createTime'];
-    updateTime = json['updateTime'];
-    lockFlag = json['lockFlag'];
-    phone = json['phone'];
-    avatar = json['avatar'];
-    deptId = json['deptId'];
-    delFlag = json['delFlag'];
+      userId = json['userId'];
+      username = json['username'];
+      password = json['password'];
+      createTime = json['createTime'];
+      updateTime = json['updateTime'];
+      lockFlag = json['lockFlag'];
+      phone = json['phone'];
+      avatar = json['avatar'];
+      deptId = json['deptId'];
+      delFlag = json['delFlag'];
   }
 
   Map<String, dynamic> toJson()

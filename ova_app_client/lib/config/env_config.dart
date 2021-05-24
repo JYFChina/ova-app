@@ -11,12 +11,12 @@ class EnvConfig{
   static String get apiHost {
     switch (env) {
       case Env.PRO:
-        return "http://9wvb9h.natappfree.cc";
+        return "http://g9ixej.natappfree.cc";
       case Env.DEV:
-        return "http://9wvb9h.natappfree.cc";
+        return "http://g9ixej.natappfree.cc";
       case Env.LOCAL:
       default:
-        return "http://9wvb9h.natappfree.cc";
+        return "http://g9ixej.natappfree.cc";
     }
   }
 }

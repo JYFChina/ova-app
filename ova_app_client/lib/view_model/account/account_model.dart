@@ -4,6 +4,8 @@ import 'package:ova_app_client/models/account/account_init.dart';
 import 'package:ova_app_client/models/account/account_menu.dart';
 import 'package:ova_app_client/models/account/req_dto/account_dto.dart';
 import 'package:ova_app_client/utils/http/dio_util.dart';
+import 'package:ova_app_client/utils/http/http_code.dart';
+import 'package:ova_app_client/utils/storage_manager.dart';
 import 'package:ova_app_client/utils/util.dart';
 
 /* *
@@ -38,13 +40,20 @@ class AccountModel with ChangeNotifier {
     * @date: 2021/5/21 13:55
     */
   Future<bool> phoneLogin(AccountDTO account) async {
-    ResponseData response =
-        await HttpRequest.post("/auth/oauth/token", param: account.toJson());
-      response.data=AccountInit.fromJson(response.jsonData);
+    try {
+      //移除token
+      StorageManager.sharedPreferences.remove(HttpConfig.TOKEN_KEY);
+      //发送登陆请求
+      ResponseData response =
+          await HttpRequest.post("/auth/oauth/token", param: account.toJson());
 
-    if (response != null && response.result) {
-      return true;
-    } else {
+      if (response != null && response.result) {
+        response.data = AccountInit.fromJson(response.jsonData);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       return false;
     }
   }
@@ -74,7 +83,7 @@ class AccountModel with ChangeNotifier {
   Future<ResponseData> getMenu(String parentId) async {
     ResponseData response =
         await HttpRequest.get("/admin/menu", param: {'parentId': parentId});
-    response.data=AccountMenu.fromJson(response.jsonData);
+    response.data = AccountMenu.fromJson(response.jsonData);
     if (response != null && response.result) {
       return response;
     } else {
