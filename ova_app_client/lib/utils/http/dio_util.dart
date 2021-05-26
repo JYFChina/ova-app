@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:ova_app_client/config/env_config.dart';
+import 'package:ova_app_client/config/http_config.dart';
 
 import 'dart:collection';
 

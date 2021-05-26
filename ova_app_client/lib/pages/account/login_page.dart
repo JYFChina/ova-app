@@ -7,6 +7,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:ova_app_client/models/account/account.dart';
 import 'package:ova_app_client/models/account/req_dto/account_dto.dart';
+import 'package:ova_app_client/utils/http/event_bus_util.dart';
 import 'package:ova_app_client/utils/http/http_code.dart';
 import 'package:ova_app_client/utils/util.dart';
 
