@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ova_app_client/config/env_config.dart';
 import 'package:ova_app_client/config/http_config.dart';
 import 'package:ova_app_client/models/account/account.dart';
+import 'package:ova_app_client/models/account/account_info.dart';
 import 'package:ova_app_client/models/account/account_init.dart';
 import 'package:ova_app_client/models/account/account_menu.dart';
 import 'package:ova_app_client/models/account/req_dto/account_dto.dart';
@@ -61,14 +62,13 @@ class AccountModel with ChangeNotifier {
     * @date: 2021/5/21 13:55
     */
   Future<bool> phoneLogin(AccountDTO account) async {
-    try {
+
       //移除token
       StorageManager.sharedPreferences.remove(HttpConfig.TOKEN_KEY);
       //发送登陆请求
-      ResponseData response = await AccountService.phoneLogin(account);
+      ResModel<AccountInit> response = await AccountService.phoneLogin(account);
 
-      if (response != null && response.result) {
-        response.data = AccountInit.fromJson(response.jsonData);
+      if (response != null) {
         //绑定用户登陆状态信息
         StorageManager.localStorage
             .setItem(HttpConfig.LOGIN_STATUS, response.data);
@@ -78,19 +78,17 @@ class AccountModel with ChangeNotifier {
       } else {
         return false;
       }
-    } catch (e) {
-      return false;
-    }
+
   }
 
   /* * 功能描述:获取用户信息
   * @Author: JYF
   * @date: 2021/5/21 14:31
   */
-  Future<ResponseData> getUserInfo() async {
-    ResponseData response = await AccountService.getUserInfo();
+  Future<ResModel> getUserInfo() async {
+    ResModel response = await AccountService.getUserInfo();
 
-    if (response != null && response.result) {
+    if (response != null) {
       StorageManager.localStorage.setItem(HttpConfig.USER_INFO, response.data);
       return response;
     } else {
@@ -103,10 +101,9 @@ class AccountModel with ChangeNotifier {
     * @Author: JYF
     * @date: 2021/5/21 14:07
     */
-  Future<ResponseData> getMenu(String parentId) async {
-    ResponseData response = await AccountService.getMenu(parentId);
-    response.data = AccountMenu.fromJson(response.jsonData);
-    if (response != null && response.result) {
+  Future<ResModel> getMenu(String parentId) async {
+    ResModel response = await AccountService.getMenu(parentId);
+    if (response != null) {
       return response;
     } else {
       return null;
@@ -119,10 +116,9 @@ class AccountModel with ChangeNotifier {
       * @Author: JYF
       * @date: 2021/5/21 14:07
       */
-  Future<ResponseData> getBottomNavMenu() async {
-    ResponseData response = await AccountService.getBottomNavMenu();
-
-    if (response != null && response.result) {
+  Future<ResModel> getBottomNavMenu() async {
+    ResModel response = await AccountService.getBottomNavMenu();
+    if (response != null) {
       return response;
     } else {
       return null;

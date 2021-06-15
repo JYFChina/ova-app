@@ -31,21 +31,18 @@ class AccountService {
     * @Author: JYF
     * @date: 2021/5/21 13:55
     */
-  static Future<ResponseData> phoneLogin(AccountDTO account) async {
-    try {
+  static Future<ResModel<AccountInit>> phoneLogin(AccountDTO account) async {
+
       //发送登陆请求
-      ResponseData<AccountInit> response =
-          await HttpRequest.post("/auth/oauth/token", param: account.toJson());
+      ResponseData response =
+          await HttpRequest.get("/auth/oauth/token", param: account.toJson());
 
       if (response != null && response.result) {
-        response.data = AccountInit.fromJson(response.jsonData);
-        return response;
+
+        return ResModel<AccountInit>(AccountInit.fromJson(response.data),response.msg,response.code);
       } else {
         return null;
       }
-    } catch (e) {
-      return null;
-    }
   }
 
 /* * 功能描述:获取用户信息
@@ -54,13 +51,13 @@ class AccountService {
 * @Author: JYF
 * @date: 2021/5/21 14:31
 */
-  static Future<ResponseData> getUserInfo() async {
-    ResponseData<AccountInfo> response =
-        await HttpRequest.get("/admin/user/info");
+  static Future<ResModel<AccountInfo>> getUserInfo() async {
+    ResponseData response =
+        await HttpRequest.post("/admin/user/info");
 
-    if (response != null && response.result) {
-      response.data = AccountInfo.fromJson(response.jsonData);
-      return response;
+    if (response != null ) {
+      ResModel resModel=ResModel.fromJson(response.data);
+      return ResModel<AccountInfo>(AccountInfo.fromJson(resModel.data),resModel.msg,resModel.code);
     } else {
       return null;
     }
@@ -72,12 +69,12 @@ class AccountService {
     * @Author: JYF
     * @date: 2021/5/21 14:07
     */
-  static Future<ResponseData> getMenu(String parentId) async {
+  static Future<ResModel> getMenu(String parentId) async {
     ResponseData response =
         await HttpRequest.get("/admin/menu", param: {'parentId': parentId});
-    response.data = AccountMenu.fromJson(response.jsonData);
+    ResModel resModel=ResModel.fromJson(response.data);
     if (response != null && response.result) {
-      return response;
+      return ResModel(AccountMenu.fromJson(resModel.data),resModel.msg,resModel.code);
     } else {
       return null;
     }
@@ -89,11 +86,12 @@ class AccountService {
       * @Author: JYF
       * @date: 2021/5/21 14:07
       */
-  static Future<ResponseData> getBottomNavMenu() async {
+  static Future<ResModel> getBottomNavMenu() async {
     ResponseData response = await HttpRequest.post("/auth/oauth/token");
 
     if (response != null && response.result) {
-      return response;
+      ResModel resModel=ResModel.fromJson(response.data);
+      return ResModel(AccountMenu.fromJson(resModel.data),resModel.msg,resModel.code);
     } else {
       return null;
     }

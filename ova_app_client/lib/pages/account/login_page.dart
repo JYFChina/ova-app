@@ -296,7 +296,8 @@ class _LoginPageState extends State<LoginPage> {
                     EventBusUtil.loading();
                     model.phoneLogin(dto).then((value) {
                       EventBusUtil.notify(value?"登陆成功":"登陆失败");
-                    }).catchError((){
+                    }).catchError((e){
+                      print(e);
                       EventBusUtil.done();
                     });
 

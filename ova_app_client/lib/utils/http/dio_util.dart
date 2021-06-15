@@ -96,7 +96,7 @@ class HttpRequest {
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
         print("\n================== 请求数据 ==========================");
         print("url = ${options.uri.toString()}");
-        print("headers = ${options.headers}");
+        print("headers : ${options.headers}");
         print("params = ${options.data}");
       }, onResponse: (Response response) {
         print("\n================== 响应数据 ==========================");
@@ -115,8 +115,21 @@ class HttpRequest {
     Response response;
 
     try {
-      response = await dio.request(url,
-          data: params, queryParameters: params, options: option);
+
+     switch (option.method){
+       case 'GET':
+         response = await dio.request(url, queryParameters: params, options: option);
+         break;
+       case 'POST':
+         response = await dio.request(url,
+                 data: params,options: option);
+         break;
+       default:
+         response = await dio.request(url,
+                 data: params, queryParameters: params, options: option);
+         break;
+     }
+
     } on DioError catch (e) {
       // 请求错误处理
       Response errorResponse;
@@ -134,9 +147,11 @@ class HttpRequest {
       }
 
       return new ResponseData(
-          Code.errorHandleFunction(errorResponse.statusCode, e.message, noTip),
+          null,
           false,
-          errorResponse.statusCode);
+          errorResponse.statusCode,
+              msg:  e.message,
+      );
     }
 
     try {
@@ -198,13 +213,25 @@ class HttpRequest {
   * 网络结果数据
   * Date: 2018-07-16
   */
-class ResponseData<T> {
+class ResponseData {
   int code;
   String msg;
-  var jsonData;//为转换的json数据
-  T data;//转换成对象的可用数据
+  var data;
   bool result;
   var headers;
-
-  ResponseData(this.jsonData, this.result, this.code, {this.headers, this.msg,this.data});
+  ResponseData(this.data, this.result, this.code, {this.headers, this.msg});
 }
+class ResModel<T>{
+  int code;
+  String msg;
+  T data;
+  ResModel(this.data, this.msg, this.code);
+
+  ResModel.fromJson(Map<String, dynamic> json) {
+    code =json['code'];
+    msg = json['msg'];
+    data = json['data'];
+  }
+}
+
+
